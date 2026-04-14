@@ -29,4 +29,8 @@ Andmebaasidega seotud sql kood ja konspektid
   
 
   ## Piirangud
-  1.
+  1. Primary Key - Määrab tabeli primaarvõtme veeru või veergude kogumina
+  2. Foreign Key - Määrab välisvõtme, millega seotakse omavahel kaks tabelit
+  3. Unique - Tagab, et veerus või veergude kogumis ei lubataks väärtuse dubleerimist
+  4. Not Null - Keelab (takistab) null-väärtuste lisamise
+  5. Check - Kasutatakse määratud väärtustega veeru lubatud väärtuste hulga piiramiseks
