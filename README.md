@@ -29,17 +29,20 @@ Andmebaasidega seotud sql kood ja konspektid
   
 
   ## Piirangud
+  
+```
   1. Primary Key - Määrab tabeli primaarvõtme veeru või veergude kogumina
   2. Foreign Key - Määrab välisvõtme, millega seotakse omavahel kaks tabelit
   3. Unique - Tagab, et veerus või veergude kogumis ei lubataks väärtuse dubleerimist
   4. Not Null - Keelab (takistab) null-väärtuste lisamise
   5. Check - Kasutatakse määratud väärtustega veeru lubatud väärtuste hulga piiramiseks
-  ```
- ## Tabelivahelised Seosed
-<img width="1220" height="838" alt="{E75813D3-EDB8-4DFF-AE19-FF61C58B38F8}" src="https://github.com/user-attachments/assets/3aa56db4-20e5-47c3-b0c4-d9d706e1c9ba" />
+```
 
+ ## Tabelivahelised Seosed
 - üks - ühele (nt mees --naine)
 - üks - mitmele (õpilane käib erinevates õppeainetes)
+<img width="500" height="150" alt="{E75813D3-EDB8-4DFF-AE19-FF61C58B38F8}" src="https://github.com/user-attachments/assets/3aa56db4-20e5-47c3-b0c4-d9d706e1c9ba" />
+
 
 - mitu-mitmele (nt õpilane - õpetaja)
 
