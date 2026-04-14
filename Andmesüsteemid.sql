@@ -79,7 +79,7 @@ VALUES ('Nimi', 'perenimi', 'E10' , 0, 'Tallinn, Eesti'),
 CREATE TABLE opetamine(
 opetamineId int Primary Key identity(1,1),
 opetajaId int,
-Foreign Key (opetajaId) References opilane(opetajaId), --tabel(PK veerg)
+Foreign Key (opetajaId) References opetaja(opetajaId), --tabel(PK veerg)
 oppeaine varchar(25),
 maht int);
 
@@ -87,7 +87,7 @@ SELECT * from opetaja;
 SELECT * from opetamine;
 
 INSERT INTO opetamine
-VALUES ('2024-03-14', 1, 'E10', 60);
+VALUES ( 1, 'matemaatika', 60);
 --testTabel
 Create table testTabel(
 id int primary key);
