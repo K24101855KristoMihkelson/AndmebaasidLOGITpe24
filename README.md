@@ -36,11 +36,13 @@ Andmebaasidega seotud sql kood ja konspektid
   5. Check - Kasutatakse määratud väärtustega veeru lubatud väärtuste hulga piiramiseks
   ```
  ## Tabelivahelised Seosed
+<img width="1220" height="838" alt="{E75813D3-EDB8-4DFF-AE19-FF61C58B38F8}" src="https://github.com/user-attachments/assets/3aa56db4-20e5-47c3-b0c4-d9d706e1c9ba" />
+
 - üks - ühele (nt mees --naine)
 - üks - mitmele (õpilane käib erinevates õppeainetes)
 
 - mitu-mitmele (nt õpilane - õpetaja)
 
-<img width="783" height="513" alt="{4669C683-9353-46FC-9AA1-63B34570D407}" src="https://github.com/user-attachments/assets/67573037-7ad0-498b-8194-8209a83d8d1f" />
+
 
 
