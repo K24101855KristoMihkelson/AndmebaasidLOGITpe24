@@ -41,7 +41,7 @@ Andmebaasidega seotud sql kood ja konspektid
  ## Tabelivahelised Seosed
 - üks - ühele (nt mees --naine)
 - üks - mitmele (õpilane käib erinevates õppeainetes)
-<img width="500" height="150" alt="{E75813D3-EDB8-4DFF-AE19-FF61C58B38F8}" src="https://github.com/user-attachments/assets/3aa56db4-20e5-47c3-b0c4-d9d706e1c9ba" />
+<img width="602" height="539" alt="{0AC09704-51C6-4D3C-A9BF-87F7EFB1F7BF}" src="https://github.com/user-attachments/assets/d691bfe2-e694-491f-8878-aecb15e7a16a" />
 
 
 - mitu-mitmele (nt õpilane - õpetaja)
