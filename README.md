@@ -41,6 +41,6 @@ Andmebaasidega seotud sql kood ja konspektid
 
 - mitu-mitmele (nt õpilane - õpetaja)
 
-<img width="922" height="802" alt="{D314CD62-EA6E-40C5-895B-6E8E3FEF9349}" src="https://github.com/user-attachments/assets/3ee16471-9e9d-4485-9b02-fb309c4ac9fa" />
+<img width="783" height="513" alt="{4669C683-9353-46FC-9AA1-63B34570D407}" src="https://github.com/user-attachments/assets/67573037-7ad0-498b-8194-8209a83d8d1f" />
 
 
