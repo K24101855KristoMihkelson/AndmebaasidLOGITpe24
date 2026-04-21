@@ -66,6 +66,7 @@ BEGIN
 END
 --kutse
 EXEC lisaKategooria 'test';
+
 --proceduur, mis kustutab tabelist id järgi
 Create procedure kustutaIdJargi
 @id int
