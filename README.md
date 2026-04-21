@@ -78,6 +78,60 @@ BEGIN
 END
 --kutse 
 EXEC kustutaIdJargi 3;
+CREATE TABLE Staff (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    eesnimi varchar(50),
+    perenimi varchar(50),
+    ametikoht varchar(50)
+);
+
+--proceduur, mis lisab uue töötaja
+CREATE PROCEDURE LisaTootaja
+    @eesnimi varchar(50),
+    @perenimi varchar(50),
+    @ametikoht varchar(50)
+AS
+BEGIN 
+    Select * from Staff
+    INSERT INTO Staff (eesnimi, perenimi, ametikoht)
+    VALUES (@eesnimi, @perenimi, @ametikoht);
+	Select * from Staff
+END;
+
+--kutse
+EXEC LisaTootaja @eesnimi = 'Mari', @perenimi = 'Maasikas', @ametikoht = 'Müüja';
+EXEC LisaTootaja @eesnimi = 'Jaan', @perenimi = 'Tamm', @ametikoht = 'Ladu';
+
+--proceduur, mis muutab töötaja ametikohta
+
+CREATE PROCEDURE MuudaAmetikohta
+    @id int,
+    @uusAmetikoht varchar(50)
+AS
+BEGIN
+    SELECT * FROM Staff
+    UPDATE Staff 
+    SET ametikoht = @uusAmetikoht
+    WHERE id = @id;
+	SELECT * FROM Staff
+END;
+
+--kutse
+EXEC MuudaAmetikohta @id = 2, @uusAmetikoht = 'Laojuhataja';
+
+--proceduur, mida kasutatakse töötajate ostmiseks ameti järgi 
+CREATE PROCEDURE OtsiAmetikohaJargi
+    @otsitavAmet varchar(50)
+AS
+BEGIN
+    SELECT * FROM Staff
+    WHERE ametikoht = @otsitavAmet;
+	Select * from Staff 
+END;
+
+--kutse
+EXEC OtsiAmetikohaJargi @otsitavAmet = 'Laojuhataja';
+
 ```
 
 
