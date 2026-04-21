@@ -51,12 +51,22 @@ Andmebaasidega seotud sql kood ja konspektid
 
 - mitu-mitmele (nt õpilane - õpetaja)
 
-## Veebipood
-
-<img width="1159" height="517" alt="{75A2993D-3987-4BA5-A6DF-8CDDF65D4AE6}" src="https://github.com/user-attachments/assets/5d0e640d-7c72-4bc2-8732-a08f6e8b163a" />
-<img width="1428" height="816" alt="{E49C8D55-6C04-4B0C-8CC8-EC21A285EF6D}" src="https://github.com/user-attachments/assets/f3ba446f-f42d-454a-932b-b4e5fdce920b" />
-<img width="1690" height="964" alt="{6E1EDC25-0722-4D16-8BA4-3CBB9BDF32EF}" src="https://github.com/user-attachments/assets/de466f93-eb6f-4f9a-84c7-5d5767a1fcc2" />
-
+## Stored procedure
+  Salvestatud protseduurid - sama mis on funktsioonid programmeerimises - mingi tegevus(ed), mida saab automaatselt teha (INSERT, SELECT, UPDATE, DELETE) 
+```sql
+select * from categories;
+--protseduur, mis täidab tabeli
+CREATE PROCEDURE lisaKategooria
+@nimi varchar(15)
+AS
+BEGIN
+    INSERT INTO categories
+	VALUES (@nimi);
+	SELECT * FROM categories;
+END
+--kutse
+EXEC lisaKategooria 'test';
+```
 
 
 
