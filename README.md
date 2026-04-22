@@ -134,7 +134,7 @@ EXEC OtsiAmetikohaJargi @otsitavAmet = 'Laojuhataja';
 
 ```
 
-<img width="629" height="320" alt="{46364413-2B6D-416D-88EC-DAB314F8DD51}" src="https://github.com/user-attachments/assets/32119cc8-e397-4bae-89d1-f8fbc20eb87f" />
+<img width="618" height="324" alt="{0F0EF3B5-9B51-4EEE-BFDA-218CA20BF817}" src="https://github.com/user-attachments/assets/cab930ce-513f-42c9-b8dc-060082e689fe" />
 
 
 
