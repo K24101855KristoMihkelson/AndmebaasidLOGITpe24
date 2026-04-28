@@ -1,0 +1,125 @@
+--Koostan tabel klient
+CREATE TABLE klient (
+    Id int PRIMARY KEY IDENTITY(1,1),
+    Nimi varchar(30) NOT NULL,
+    linn varchar(20),
+    vanus int DEFAULT 1,
+    saldo money
+);
+INSERT INTO klient (nimi, linn, vanus, saldo)
+VALUES ('Kristo', 'Tallinn', 32, 750.00);
+
+-- Koostan procedure kliendi_kuvamine, mis kuvab tabeli klient sisu
+CREATE PROCEDURE kliendi_kuvamine
+AS
+BEGIN
+    SELECT * FROM klient;
+END;
+
+EXEC kliendi_kuvamine;
+
+-- Koostan procedure lisa_klient, mis lisab tabelisse klient uue kliendi
+CREATE PROCEDURE lisa_klient
+    @nimi NVARCHAR(100),
+    @linn NVARCHAR(100),
+    @vanus INT,
+    @saldo MONEY
+AS
+BEGIN
+    INSERT INTO klient (nimi, linn, vanus, saldo)
+    VALUES (@nimi, @linn, @vanus, @saldo);
+END;
+
+EXEC lisa_klient 'Mari', 'Tallinn', 25, 150;
+
+--protseduur, mis muudab andmeid
+
+CREATE PROCEDURE muuda_klient
+    @id INT,
+    @linn NVARCHAR(100),
+    @saldo MONEY
+AS
+BEGIN
+    UPDATE klient
+    SET linn = @linn,
+        saldo = @saldo
+    WHERE id = @id;
+END;
+
+EXEC muuda_klient 1, 'Tartu', 300;
+
+--protseduur, mis kustutab andmeid
+CREATE PROCEDURE kustuta_klient
+    @id INT
+AS
+BEGIN
+    DELETE FROM klient
+    WHERE id = @id;
+END;
+
+EXEC kustuta_klient 3;
+
+--protseduur, mis otsib uut klienti
+CREATE PROCEDURE otsi_klient
+    @nimi NVARCHAR(100)
+AS
+BEGIN
+    SELECT * FROM klient
+    WHERE nimi LIKE @nimi + '%';
+END;
+
+EXEC otsi_klient 'Mari';
+
+EXEC otsi_klient 'M';
+
+--protseduur, mis leiab kõige väiksema ja kõige suurema saldo.
+
+CREATE PROCEDURE saldo_min_max
+    @minsaldo MONEY OUTPUT,
+    @maxsaldo MONEY OUTPUT
+AS
+BEGIN
+    SELECT @minsaldo = MIN(saldo),
+           @maxsaldo = MAX(saldo)
+    FROM klient;
+END;
+
+DECLARE @min MONEY;
+DECLARE @max MONEY;
+
+EXEC saldo_min_max @min OUTPUT, @max OUTPUT;
+
+SELECT @min AS MinSaldo, @max AS MaxSaldo;
+
+--Näitab kliendi staatust saldo järgi.
+CREATE PROCEDURE kliendi_staatus
+AS
+BEGIN
+    SELECT nimi,
+           saldo,
+           CASE
+               WHEN saldo > 100 THEN 'Hea klient'
+               ELSE 'Tavaklient'
+           END AS staatus
+    FROM klient;
+END;
+
+EXEC kliendi_staatus;
+
+--lisab või kustutab veeru dünaamilise SQL-iga.
+CREATE PROCEDURE veeru_haldus
+    @tegevus NVARCHAR(10)
+AS
+BEGIN
+    IF @tegevus = 'lisa'
+        EXEC('ALTER TABLE klient ADD email NVARCHAR(100)');
+        
+    ELSE IF @tegevus = 'kustuta'
+        EXEC('ALTER TABLE klient DROP COLUMN email');
+END;
+
+EXEC veeru_haldus 'lisa';
+
+EXEC veeru_haldus 'kustuta';
+
+select * from klient;
