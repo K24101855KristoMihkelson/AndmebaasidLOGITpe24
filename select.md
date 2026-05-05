@@ -95,4 +95,17 @@ ORDER by hind;
 <img width="398" height="253" alt="{3A19DE08-35D3-463E-9192-B3BF46A48AC5}" src="https://github.com/user-attachments/assets/f96732f4-496a-4454-a375-bc21b1b61a84" />
 <img width="394" height="266" alt="{27D6F627-BFA6-4374-B4A0-10F4B173512D}" src="https://github.com/user-attachments/assets/c8cc8fff-320f-4293-a73b-9fde6dc1f88e" />
 
+<img width="434" height="110" alt="{0053424E-27BB-4321-A977-54729B5A30D2}" src="https://github.com/user-attachments/assets/537d9679-f51c-4e13-9133-033c08a5c439" />
+<img width="370" height="447" alt="{E3DB9050-8A74-43CF-A33D-5FEEADB3A07E}" src="https://github.com/user-attachments/assets/7c2f94ef-452b-47ec-8487-bb2dab77bf47" />
+
+<img width="293" height="128" alt="{252884A8-8F64-4FCE-A3F6-605B0210420C}" src="https://github.com/user-attachments/assets/887a5fbc-9308-484b-8670-680b9d02a40a" />
+<img width="254" height="152" alt="{F1BB7896-01D5-4145-90D9-871F458B4EC1}" src="https://github.com/user-attachments/assets/0414fce3-0087-49b4-bed8-9d695e2bd57e" />
+
+
+
+
+
+
+
+
 
