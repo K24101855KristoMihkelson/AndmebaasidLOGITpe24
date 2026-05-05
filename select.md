@@ -84,4 +84,7 @@ ORDER by hind;
 <img width="412" height="429" alt="{F9B25BA2-8286-4316-9B1E-9DFD6DB1410B}" src="https://github.com/user-attachments/assets/76d02076-418e-4bf2-8023-e2d78e4e37ec" />
 <img width="329" height="445" alt="{518D6670-7583-4D5A-B33A-FCD3ED1A3913}" src="https://github.com/user-attachments/assets/d744ce50-523a-41bf-af0a-553a03358e20" />
 
+<img width="237" height="83" alt="{A40093A1-9B23-4230-BAB0-AF3F913655B6}" src="https://github.com/user-attachments/assets/ce1e48ab-247b-44f0-8152-09937ad55830" />
+<img width="144" height="271" alt="{224B543D-E10D-44DD-ACB0-6C09A4C2A6B0}" src="https://github.com/user-attachments/assets/6ca940df-6a4e-4a15-b02f-62e2eade68ba" />
+
 
