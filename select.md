@@ -102,6 +102,19 @@ ORDER by hind;
 <img width="254" height="152" alt="{F1BB7896-01D5-4145-90D9-871F458B4EC1}" src="https://github.com/user-attachments/assets/0414fce3-0087-49b4-bed8-9d695e2bd57e" />
 
 
+<img width="429" height="58" alt="{875FC664-3812-425D-B8D3-B025582ACC2C}" src="https://github.com/user-attachments/assets/96d773b8-c0df-40a3-9850-7a6649a559e9" />
+<img width="182" height="105" alt="{65D2C1C0-4F9A-480A-B0E3-D824EA4EF0B7}" src="https://github.com/user-attachments/assets/1f425a34-abbd-42ff-a1c5-0f963db0e104" />
+
+<img width="423" height="66" alt="{39598FBF-AC4F-43A7-8E6E-B84C4C27178F}" src="https://github.com/user-attachments/assets/1eb2c778-48c4-4ba4-8a61-a0cc245f9c0b" />
+<img width="266" height="113" alt="{96698CDA-8C45-4785-ADD2-EA3D6BF07CB7}" src="https://github.com/user-attachments/assets/1b59268d-9a71-4af7-ba03-41790e19d790" />
+
+<img width="446" height="123" alt="{53C87FF6-641A-4B97-984B-8D9CC32DC07F}" src="https://github.com/user-attachments/assets/ec81cbbd-e881-4c20-b5e2-276b2567471a" />
+<img width="254" height="436" alt="{87747278-FDF4-4FDC-AA9B-874EC1851EC7}" src="https://github.com/user-attachments/assets/ffe9a3a2-170e-4ae8-8a83-8acf207b8411" />
+<img width="263" height="173" alt="{96C9C7CE-A971-4695-B850-A315F430CACB}" src="https://github.com/user-attachments/assets/df1ba380-4105-46a7-bbf2-2bc88b2afe2e" />
+
+
+
+
 
 
 
