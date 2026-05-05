@@ -1,6 +1,6 @@
 <img width="944" height="545" alt="{F1FADFEE-E01D-4C9E-B2C2-A185CC75702D}" src="https://github.com/user-attachments/assets/233960f6-d53c-40d8-a9fe-c7157e12ecb0" />
 
-***sql
+'''sql
 create database selectMihkelson2;
 use selectMihkelson2;
 create table auto(
@@ -63,4 +63,4 @@ insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('243bMV
 insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('794Kg9', 'Dodge', 'Caravan', 1992, 'Mauv', '$7674.83');
 insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('5757j5', 'Chevrolet', 'Beretta', 1996, 'Teal', '$6791.48');
 insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('332sNA', 'Lexus', 'GX', 2006, 'Teal', '$4350.25');
-***
+'''
