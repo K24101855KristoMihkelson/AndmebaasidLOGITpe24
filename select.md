@@ -64,3 +64,15 @@ insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('794Kg9
 insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('5757j5', 'Chevrolet', 'Beretta', 1996, 'Teal', '$6791.48');
 insert into auto (autonumber, mark, mudell, v_aasta, varv, hind) values ('332sNA', 'Lexus', 'GX', 2006, 'Teal', '$4350.25');
 ```
+
+```
+--näita kõik 
+select * from auto;
+--näita ainult mark, mudel ja hind
+select mark, mudell, hind from auto;
+--tingimused
+-- sorteerimine - ORDER by -kasvavalt, DESC - kahanevalt
+select mark, mudell, hind
+from auto
+ORDER by hind;
+```
