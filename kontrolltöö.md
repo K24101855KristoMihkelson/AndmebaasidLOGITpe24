@@ -123,3 +123,50 @@ SELECT C.Name AS Riik, Ci.CityName AS Pealinn
 FROM Country AS C LEFT JOIN City AS Ci 
 ON C.Capital = Ci.ID;
 ``` [31]
+
+1. Päring autode otsimiseks aasta järgi
+
+Selle protseduuri eesmärk on kuvada autod kindla aasta järgi. Kasutaja sisestab aasta parameetrina ja protseduur näitab ainult neid autosid, mille väljalaskeaasta vastab sisestatud väärtusele.
+
+-- Kuvab autod kindla aasta järgi
+CREATE PROCEDURE AutodAastaJargi
+@aasta varchar(10)
+AS
+BEGIN
+    SELECT autonumber, mark, varv, hind, v_aasta
+    FROM auto
+    WHERE v_aasta = @aasta;
+END;
+
+EXEC AutodAastaJargi '2007';
+2. Päring autode otsimiseks hinna järgi
+
+Selle protseduuri eesmärk on kuvada autod, mille hind ei ületa kasutaja sisestatud summat. Parameetriks on maksimaalne hind ning tulemuses näidatakse ainult sobiva hinnaga autod.
+
+-- Kuvab autod, mille hind on väiksem või võrdne sisestatud hinnaga
+CREATE PROCEDURE AutodMaxHinnaga
+@maxhind decimal(10,2)
+AS
+BEGIN
+    SELECT autonumber, mark, varv, hind
+    FROM auto
+    WHERE hind <= @maxhind;
+END;
+
+EXEC AutodMaxHinnaga 6000;
+3. Päring autode otsimiseks margi ja värvi järgi
+
+Selle protseduuri eesmärk on kuvada autod kindla margi ja värvi järgi. Kasutaja sisestab kaks parameetrit: auto margi ja värvi. Tulemuseks kuvatakse ainult need autod, mis vastavad mõlemale tingimusele.
+
+-- Kuvab autod kindla margi ja värvi järgi
+CREATE PROCEDURE AutodMarkVarv
+@mark varchar(20),
+@varv varchar(20)
+AS
+BEGIN
+    SELECT autonumber, mark, varv, hind, v_aasta
+    FROM auto
+    WHERE mark = @mark AND varv = @varv;
+END;
+
+EXEC AutodMarkVarv 'Nissan', 'Orange';
