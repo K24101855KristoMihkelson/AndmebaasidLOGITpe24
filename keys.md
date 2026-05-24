@@ -93,6 +93,11 @@ CREATE TABLE KullerVeok (
 ```
 <img width="756" height="407" alt="image" src="https://github.com/user-attachments/assets/3adea2e1-69c1-46f2-a343-9978b55a5407" />
 
+**Composite Key** koosneb mitmest veerust, kuid need ei pea viitama teistele tabelitele.
+**Compound Key** on sama, kuid kõik veerud on ühtlasi võõrvõtmed — see on Composite Key erijuhtum.
+
+**Lihtne reegel:** kui liitvõtme veerud viitavad teistele tabelitele → Compound Key. Kui mitte → Composite Key.
+
 ## 7. Superkey (Supervõti)
 * **Definitsioon:** Veerg või veergude kombinatsioon, mis tuvastab tabelis iga rea unikaalselt. See võib sisaldada ka üleliigseid veergusid.
 * **Kasutuseesmärk:** Andmebaaside teoorias kasutatav kontseptsioon, mille baasilt selekteeritakse välja optimaalne primaarvõti.
