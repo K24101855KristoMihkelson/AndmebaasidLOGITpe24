@@ -1,0 +1,101 @@
+-- ==========================================
+-- 1.-3., 5. TABELITE LOOMINE JA PIIRANGUD
+-- ==========================================
+-- Sõltumatud tabelid (Eriala ja Opetaja)
+CREATE TABLE Eriala (
+    eriala_id INT PRIMARY KEY,
+    nimetus VARCHAR(100) NOT NULL UNIQUE,
+    kood VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE Opetaja (
+    opetaja_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    epost VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Sõltuvad tabelid (Opilane ja Kursus)
+CREATE TABLE Opilane (
+    opilane_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    isikukood CHAR(11) NOT NULL UNIQUE,
+    eriala_id INT,
+    FOREIGN KEY (eriala_id) REFERENCES Eriala(eriala_id)
+);
+
+CREATE TABLE Kursus (
+    kursus_id INT PRIMARY KEY,
+    nimetus VARCHAR(100) NOT NULL,
+    ainepunktid INT CHECK (ainepunktid > 0),
+    opetaja_id INT,
+    FOREIGN KEY (opetaja_id) REFERENCES Opetaja(opetaja_id)
+);
+
+-- VAHETABEL M:N seose jaoks (Hinne seob Õpilase ja Kursuse)
+CREATE TABLE Hinne (
+    hinne_id INT PRIMARY KEY,
+    opilane_id INT NOT NULL,
+    kursus_id INT NOT NULL,
+    hinne INT CHECK (hinne BETWEEN 1 AND 5),
+    kuupaev DATE DEFAULT GETDATE(),
+    FOREIGN KEY (opilane_id) REFERENCES Opilane(opilane_id),
+    FOREIGN KEY (kursus_id) REFERENCES Kursus(kursus_id)
+);
+
+
+-- ==========================================
+-- 4. ANDMETE SISESTAMINE (INSERT)
+-- ==========================================
+INSERT INTO Eriala VALUES (1, 'Logistika IT süsteemid', 'LITS24'), (2, 'Tarkvaraarendus', 'TA24'), (3, 'Võrgutehnoloogiad', 'VT24'), (4, 'Keevitaja', 'KEEV24'), (5, 'Autotehnik', 'AT24');
+INSERT INTO Opetaja VALUES (1, 'Igor Kozlov', 'igor@kool.ee'), (2, 'Johannes Kiigemägi', 'johannes@kool.ee'), (3, 'Tiina Tamm', 'tiina@kool.ee'), (4, 'Andres Kask', 'andres@kool.ee'), (5, 'Mari Maasikas', 'mari.m@kool.ee');
+INSERT INTO Opilane VALUES (1, 'Kristo Mihkelson', '39901010123', 1), (2, 'Nicoalas', '39902020234', 1), (3, 'Brandon', '39903030345', 1), (4, 'Aleksei', '39904040456', 2), (5, 'Anna', '49905050567', 3);
+INSERT INTO Kursus VALUES (1, 'Andmebaasid ja SQL', 5, 1), (2, 'Võrgutarkvara ja GPO', 6, 2), (3, 'Skriptimine ja Linux', 4, 1), (4, 'Matemaatika', 3, 3), (5, 'Inglise keel', 3, 5);
+INSERT INTO Hinne VALUES (1, 1, 1, 5, '2026-05-20'), (2, 2, 1, 4, '2026-05-20'), (3, 3, 2, 5, '2026-05-21'), (4, 1, 2, 4, '2026-05-22'), (5, 4, 3, 3, '2026-05-23');
+
+-- ==========================================
+-- 6. PROTSEDUURID (3 igale tabelile = 15 tk)
+-- ==========================================
+-- ERIALAD
+CREATE PROCEDURE LisaEriala @id INT, @nimetus VARCHAR(100), @kood VARCHAR(10) AS BEGIN INSERT INTO Eriala VALUES (@id, @nimetus, @kood); END;
+CREATE PROCEDURE MuudaErialaNimetust @id INT, @uus_nimetus VARCHAR(100) AS BEGIN UPDATE Eriala SET nimetus = @uus_nimetus WHERE eriala_id = @id; END;
+CREATE PROCEDURE OtsiErialaKoodiga @kood VARCHAR(10) AS BEGIN SELECT * FROM Eriala WHERE kood = @kood; END;
+
+-- OPETAJAD
+CREATE PROCEDURE LisaOpetaja @id INT, @nimi VARCHAR(100), @epost VARCHAR(100) AS BEGIN INSERT INTO Opetaja VALUES (@id, @nimi, @epost); END;
+CREATE PROCEDURE MuudaOpetajaEposti @id INT, @uus_epost VARCHAR(100) AS BEGIN UPDATE Opetaja SET epost = @uus_epost WHERE opetaja_id = @id; END;
+CREATE PROCEDURE OtsiOpetajat @nimi VARCHAR(100) AS BEGIN SELECT * FROM Opetaja WHERE nimi LIKE @nimi + '%'; END;
+
+-- OPILASED
+CREATE PROCEDURE LisaOpilane @id INT, @nimi VARCHAR(100), @ikood CHAR(11), @eriala INT AS BEGIN INSERT INTO Opilane VALUES (@id, @nimi, @ikood, @eriala); END;
+CREATE PROCEDURE MuudaOpilaseEriala @id INT, @uus_eriala INT AS BEGIN UPDATE Opilane SET eriala_id = @uus_eriala WHERE opilane_id = @id; END;
+CREATE PROCEDURE OtsiErialaOpilased @eriala_id INT AS BEGIN SELECT * FROM Opilane WHERE eriala_id = @eriala_id; END;
+
+-- KURSUSED
+CREATE PROCEDURE LisaKursus @id INT, @nimetus VARCHAR(100), @ap INT, @opetaja INT AS BEGIN INSERT INTO Kursus VALUES (@id, @nimetus, @ap, @opetaja); END;
+CREATE PROCEDURE MuudaKursuseAinepunkte @id INT, @uus_ap INT AS BEGIN UPDATE Kursus SET ainepunktid = @uus_ap WHERE kursus_id = @id; END;
+CREATE PROCEDURE OtsiOpetajaKursused @opetaja_id INT AS BEGIN SELECT * FROM Kursus WHERE opetaja_id = @opetaja_id; END;
+
+-- HINDED
+CREATE PROCEDURE LisaHinne @id INT, @opilane INT, @kursus INT, @hinne INT AS BEGIN INSERT INTO Hinne VALUES (@id, @opilane, @kursus, @hinne, GETDATE()); END;
+ CREATE PROCEDURE MuudaHinnet @id INT, @uus_hinne INT AS BEGIN UPDATE Hinne SET hinne = @uus_hinne WHERE hinne_id = @id; END;
+CREATE PROCEDURE OtsiOpilaseHinded @opilane_id INT AS BEGIN SELECT h.kuupaev, k.nimetus, h.hinne FROM Hinne h JOIN Kursus k ON h.kursus_id = k.kursus_id WHERE h.opilane_id = @opilane_id; END;
+
+SELECT * FROM Eriala; 
+SELECT * FROM Opetaja; 
+SELECT * FROM Opilane; 
+SELECT * FROM Kursus; 
+SELECT * FROM Hinne;
+
+Test 1: Pärimine (Õpilase id 1 ehk Kristo hinnete väljavõte)
+
+EXEC OtsiOpilaseHinded @opilane_id = 1;
+
+Test 2: Uue andme lisamine (Uus hinne Kristole)
+
+EXEC LisaHinne @id = 6, @opilane = 1, @kursus = 3, @hinne = 5;
+
+Test 3: Andmete muutmine (Kursuse ainepunktide korrigeerimine)
+
+EXEC MuudaKursuseAinepunkte @id = 1, @uus_ap = 6;
+
+
