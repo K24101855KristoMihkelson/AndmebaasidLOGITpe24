@@ -1,0 +1,99 @@
+-- ==========================================
+-- 1.-3., 5. TABELITE LOOMINE JA PIIRANGUD
+-- ==========================================
+-- Sõltumatud tabelid (Klient, Toode, Kuller)
+CREATE TABLE Klient (
+    klient_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Toode (
+    toode_id INT PRIMARY KEY,
+    nimetus VARCHAR(100) NOT NULL,
+    hind DECIMAL(8,2) CHECK (hind > 0),
+    laoseis INT CHECK (laoseis >= 0) DEFAULT 0
+);
+
+CREATE TABLE Kuller (
+    kuller_id INT PRIMARY KEY,
+    firma_nimi VARCHAR(50) NOT NULL,
+    baastasu DECIMAL(5,2) CHECK (baastasu >= 0)
+);
+
+-- Sõltuv tabel (Tellimus sõltub Kliendist ja Kullerist)
+CREATE TABLE Tellimus (
+    tellimus_id INT PRIMARY KEY,
+    klient_id INT NOT NULL,
+    kuller_id INT NOT NULL,
+    tellimise_kuupaev DATE DEFAULT GETDATE(),
+    staatus VARCHAR(20) DEFAULT 'Töötlemisel',
+    FOREIGN KEY (klient_id) REFERENCES Klient(klient_id),
+    FOREIGN KEY (kuller_id) REFERENCES Kuller(kuller_id)
+);
+
+-- Vahetabel (Tellimuse_Rida seob Tellimuse ja Toote - M:N)
+CREATE TABLE Tellimuse_Rida (
+    rida_id INT PRIMARY KEY,
+    tellimus_id INT NOT NULL,
+    toode_id INT NOT NULL,
+    kogus INT CHECK (kogus > 0),
+    FOREIGN KEY (tellimus_id) REFERENCES Tellimus(tellimus_id),
+    FOREIGN KEY (toode_id) REFERENCES Toode(toode_id)
+);
+
+
+-- ==========================================
+-- 4. ANDMETE SISESTAMINE (INSERT)
+-- ==========================================
+INSERT INTO Klient VALUES (1, 'Tamm OÜ', 'info@tamm.ee'), (2, 'Kask AS', 'pood@kask.ee'), (3, 'Jaanus', 'jaanus@email.ee'), (4, 'Mari', 'mari@email.ee'), (5, 'IT Grupp', 'it@grupp.ee');
+INSERT INTO Toode VALUES (1, 'Sülearvuti', 850.00, 15), (2, 'Hiir', 25.00, 100), (3, 'Klaviatuur', 45.00, 50), (4, 'Monitor', 180.00, 20), (5, 'Võrgukaabel', 5.00, 200);
+INSERT INTO Kuller VALUES (1, 'Omniva', 3.50), (2, 'DPD', 4.00), (3, 'Smartpost', 2.99), (4, 'Venipak', 4.50), (5, 'DHL', 15.00);
+INSERT INTO Tellimus VALUES (1, 1, 2, '2023-12-01', 'Tarnitud'), (2, 2, 1, '2023-12-02', 'Tarnitud'), (3, 3, 3, '2023-12-03', 'Töötlemisel'), (4, 4, 5, '2023-12-04', 'Ootab makset'), (5, 5, 2, '2023-12-05', 'Teel');
+INSERT INTO Tellimuse_Rida VALUES (1, 1, 1, 2), (2, 1, 2, 2), (3, 2, 4, 1), (4, 3, 3, 1), (5, 5, 5, 10);
+
+
+-- ==========================================
+-- 6. PROTSEDUURID (3 igale tabelile = 15 tk)
+-- ==========================================
+-- KLIENT
+CREATE PROCEDURE LisaKlient @id INT, @nimi VARCHAR(100), @email VARCHAR(100) AS BEGIN INSERT INTO Klient VALUES (@id, @nimi, @email); END;
+CREATE PROCEDURE MuudaKliendiEmaili @id INT, @uus_email VARCHAR(100) AS BEGIN UPDATE Klient SET email = @uus_email WHERE klient_id = @id; END;
+CREATE PROCEDURE OtsiKlienti @nimi VARCHAR(100) AS BEGIN SELECT * FROM Klient WHERE nimi LIKE @nimi + '%'; END;
+
+-- TOODE
+CREATE PROCEDURE LisaToode @id INT, @nimetus VARCHAR(100), @hind DECIMAL(8,2), @laoseis INT AS BEGIN INSERT INTO Toode VALUES (@id, @nimetus, @hind, @laoseis); END;
+CREATE PROCEDURE MuudaLaoseisu @id INT, @uus_seis INT AS BEGIN UPDATE Toode SET laoseis = @uus_seis WHERE toode_id = @id; END;
+CREATE PROCEDURE OtsiToodet @nimetus VARCHAR(100) AS BEGIN SELECT * FROM Toode WHERE nimetus LIKE '%' + @nimetus + '%'; END;
+
+-- KULLER
+CREATE PROCEDURE LisaKuller @id INT, @firma VARCHAR(50), @tasu DECIMAL(5,2) AS BEGIN INSERT INTO Kuller VALUES (@id, @firma, @tasu); END;
+CREATE PROCEDURE MuudaKulleriTasu @id INT, @uus_tasu DECIMAL(5,2) AS BEGIN UPDATE Kuller SET baastasu = @uus_tasu WHERE kuller_id = @id; END;
+CREATE PROCEDURE OtsiKullerit @firma VARCHAR(50) AS BEGIN SELECT * FROM Kuller WHERE firma_nimi = @firma; END;
+
+-- TELLIMUS
+CREATE PROCEDURE LisaTellimus @id INT, @klient INT, @kuller INT, @staatus VARCHAR(20) AS BEGIN INSERT INTO Tellimus (tellimus_id, klient_id, kuller_id, staatus) VALUES (@id, @klient, @kuller, @staatus); END;
+CREATE PROCEDURE MuudaTellimuseStaatust @id INT, @uus_staatus VARCHAR(20) AS BEGIN UPDATE Tellimus SET staatus = @uus_staatus WHERE tellimus_id = @id; END;
+CREATE PROCEDURE OtsiKliendiTellimusi @klient_id INT AS BEGIN SELECT * FROM Tellimus WHERE klient_id = @klient_id; END;
+
+-- TELLIMUSE RIDA
+
+CREATE PROCEDURE LisaRida @id INT, @tellimus INT, @toode INT, @kogus INT AS BEGIN INSERT INTO Tellimuse_Rida VALUES (@id, @tellimus, @toode, @kogus); END;
+CREATE PROCEDURE MuudaReaKogust @id INT, @uus_kogus INT AS BEGIN UPDATE Tellimuse_Rida SET kogus = @uus_kogus WHERE rida_id = @id; END;
+CREATE PROCEDURE OtsiTellimuseRidu @tellimus_id INT AS BEGIN SELECT * FROM Tellimuse_Rida WHERE tellimus_id = @tellimus_id; END;
+
+SELECT * FROM Klient; 
+SELECT * FROM Toode; 
+SELECT * FROM Kuller; 
+SELECT * FROM Tellimus; 
+SELECT * FROM Tellimuse_Rida;
+
+(SSMS juhend: Object Explorer -> Database Diagrams -> New Database Diagram -> Lisa kõik 5 tabelit)
+
+
+Test 1: Pärimine (Kliendi tellimuste otsing)
+EXEC OtsiKliendiTellimusi @klient_id = 1;
+Test 2: Uue andme lisamine (Uus toode)
+EXEC LisaToode @id = 6, @nimetus = 'Dokk', @hind = 120.00, @laoseis = 5;
+Test 3: Andmete muutmine (Tellimuse staatuse uuendamine)
+EXEC MuudaTellimuseStaatust @id = 3, @uus_staatus = 'Tarnitud';
