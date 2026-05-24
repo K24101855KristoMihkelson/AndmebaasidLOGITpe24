@@ -1,0 +1,98 @@
+-- ==========================================
+-- 1.-3., 5. TABELITE LOOMINE JA PIIRANGUD
+-- ==========================================
+-- Sõltumatud tabelid (Esindus ja Klient)
+CREATE TABLE Esindus (
+    esindus_id INT PRIMARY KEY,
+    linn VARCHAR(50) NOT NULL UNIQUE,
+    aadress VARCHAR(100) NOT NULL,
+    avatud_alates TIME DEFAULT '09:00'
+);
+
+CREATE TABLE Klient (
+    klient_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    telefon VARCHAR(20) NOT NULL UNIQUE
+);
+
+-- Sõltuv tabel (Auto kuulub Esindusse)
+CREATE TABLE Auto (
+    auto_id INT PRIMARY KEY,
+    mark VARCHAR(50) NOT NULL,
+    reg_nr VARCHAR(10) NOT NULL UNIQUE,
+    esindus_id INT,
+    hind_paevas DECIMAL(6,2) CHECK (hind_paevas > 0),
+    FOREIGN KEY (esindus_id) REFERENCES Esindus(esindus_id)
+);
+
+-- VAHETABEL M:N seose jaoks (Seob Kliendi ja Auto)
+CREATE TABLE Rent (
+    rent_id INT PRIMARY KEY,
+    klient_id INT NOT NULL,
+    auto_id INT NOT NULL,
+    rendi_kuupaev DATE DEFAULT GETDATE(),
+    kestus_paevades INT CHECK (kestus_paevades >= 1),
+    FOREIGN KEY (klient_id) REFERENCES Klient(klient_id),
+    FOREIGN KEY (auto_id) REFERENCES Auto(auto_id)
+);
+
+-- Lisatabel (Arve sõltub Rendist)
+CREATE TABLE Arve (
+    arve_id INT PRIMARY KEY,
+    rent_id INT NOT NULL,
+    summa DECIMAL(8,2) CHECK (summa >= 0),
+    tasutud CHAR(1) CHECK (tasutud IN ('J', 'E')), 
+    FOREIGN KEY (rent_id) REFERENCES Rent(rent_id)
+);
+
+
+-- ==========================================
+-- 4. ANDMETE SISESTAMINE (INSERT)
+-- ==========================================
+INSERT INTO Esindus VALUES (1, 'Tallinn', 'Pärnu mnt 100', '08:00'), (2, 'Tartu', 'Riia 50', '09:00'), (3, 'Pärnu', 'Tallinna mnt 10', '09:00'), (4, 'Narva', 'Kerese 2', '10:00'), (5, 'Rakvere', 'Haljala tee 1', '09:00');
+INSERT INTO Klient VALUES (1, 'Kristo', '55511122'), (2, 'Malle', '55522233'), (3, 'Peeter', '55533344'), (4, 'Anna', '55544455'), (5, 'Jaan', '55555566');
+INSERT INTO Auto VALUES (1, 'Volvo V70', '123ABC', 1, 45.00), (2, 'Lexus ES', '456DEF', 1, 80.00), (3, 'Skoda Octavia', '789GHI', 2, 35.00), (4, 'Toyota RAV4', '321JKL', 3, 50.00), (5, 'VW Golf', '654MNO', 4, 30.00);
+INSERT INTO Rent VALUES (1, 1, 1, '2023-11-01', 3), (2, 2, 2, '2023-11-02', 2), (3, 3, 3, '2023-11-03', 5), (4, 4, 4, '2023-11-04', 1), (5, 5, 5, '2023-11-05', 7);
+INSERT INTO Arve VALUES (1, 1, 135.00, 'J'), (2, 2, 160.00, 'J'), (3, 3, 175.00, 'E'), (4, 4, 50.00, 'J'), (5, 5, 210.00, 'E');
+
+
+-- ==========================================
+-- 6. PROTSEDUURID (3 igale tabelile = 15 tk)
+-- ==========================================
+-- ESINDUS
+ CREATE PROCEDURE LisaEsindus @id INT, @linn VARCHAR(50), @aadress VARCHAR(100), @aeg TIME AS BEGIN INSERT INTO Esindus VALUES (@id, @linn, @aadress, @aeg); END;
+ CREATE PROCEDURE MuudaEsindust @id INT, @uus_aeg TIME AS BEGIN UPDATE Esindus SET avatud_alates = @uus_aeg WHERE esindus_id = @id; END;
+ CREATE PROCEDURE OtsiEsindust @linn VARCHAR(50) AS BEGIN SELECT * FROM Esindus WHERE linn = @linn; END;
+
+-- KLIENT
+ CREATE PROCEDURE LisaKlient @id INT, @nimi VARCHAR(100), @tel VARCHAR(20) AS BEGIN INSERT INTO Klient VALUES (@id, @nimi, @tel); END;
+ CREATE PROCEDURE MuudaKlienti @id INT, @uus_tel VARCHAR(20) AS BEGIN UPDATE Klient SET telefon = @uus_tel WHERE klient_id = @id; END;
+ CREATE PROCEDURE OtsiKlienti @nimi VARCHAR(100) AS BEGIN SELECT * FROM Klient WHERE nimi LIKE @nimi + '%'; END;
+
+-- AUTO
+ CREATE PROCEDURE LisaAuto @id INT, @mark VARCHAR(50), @reg VARCHAR(10), @esindus INT, @hind DECIMAL(6,2) AS BEGIN INSERT INTO Auto VALUES (@id, @mark, @reg, @esindus, @hind); END;
+ CREATE PROCEDURE MuudaAutoHinda @id INT, @uus_hind DECIMAL(6,2) AS BEGIN UPDATE Auto SET hind_paevas = @uus_hind WHERE auto_id = @id; END;
+ CREATE PROCEDURE OtsiAutot @esindus_id INT AS BEGIN SELECT * FROM Auto WHERE esindus_id = @esindus_id; END;
+
+-- RENT
+ CREATE PROCEDURE LisaRent @id INT, @klient INT, @auto INT, @paevi INT AS BEGIN INSERT INTO Rent VALUES (@id, @klient, @auto, GETDATE(), @paevi); END;
+ CREATE PROCEDURE MuudaRenti @id INT, @uus_paevi INT AS BEGIN UPDATE Rent SET kestus_paevades = @uus_paevi WHERE rent_id = @id; END;
+ CREATE PROCEDURE OtsiKliendiRente @klient_id INT AS BEGIN SELECT * FROM Rent WHERE klient_id = @klient_id; END;
+
+-- ARVE
+ CREATE PROCEDURE LisaArve @id INT, @rent INT, @summa DECIMAL(8,2), @tasutud CHAR(1) AS BEGIN INSERT INTO Arve VALUES (@id, @rent, @summa, @tasutud); END;
+ CREATE PROCEDURE MuudaArvet @id INT, @tasutud CHAR(1) AS BEGIN UPDATE Arve SET tasutud = @tasutud WHERE arve_id = @id; END;
+ CREATE PROCEDURE OtsiMaksmataArveid @tasutud CHAR(1) AS BEGIN SELECT * FROM Arve WHERE tasutud = @tasutud; END;
+
+SELECT * FROM Esindus; 
+SELECT * FROM Klient; 
+SELECT * FROM Auto; 
+SELECT * FROM Rent; 
+SELECT * FROM Arve;
+
+Test 1: Pärimine (Otsi maksmata arveid)
+EXEC OtsiMaksmataArveid @tasutud = 'E';
+Test 2: Uue andme lisamine (Uus klient)
+EXEC LisaKlient @id = 6, @nimi = 'Mari', @tel = '55599900';
+Test 3: Andmete muutmine (Auto päevahinna muutmine)
+EXEC MuudaAutoHinda @id = 1, @uus_hind = 50.00;
