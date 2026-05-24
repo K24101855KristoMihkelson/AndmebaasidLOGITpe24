@@ -136,6 +136,7 @@ WHERE TABLE_NAME = 'Kliendid';
 <img width="595" height="331" alt="image" src="https://github.com/user-attachments/assets/245d6909-d2db-45d7-a6d4-7fba67441f67" />
 
 # Kasutatud allikad
-### 1. Andmebaaside modelleerimise teooria ja relatsioonilise mudeli alused.
-### 2. Microsoft Learn (SQL Server): Constraints (Database Engine).
-### 3. Praktilised SQL näited on autori enda loodud IT ja logistika valdkonna baasil.
+### 1.Microsoft Learn — Primary and Foreign Key Constraints: https://learn.microsoft.com/en-us/sql/relational-databases/tables/primary-and-foreign-key-constraints
+### 2. W3Schools — SQL Keys: https://www.w3schools.com/sql/sql_primarykey.asp
+### 3. GeeksforGeeks — Types of Keys in Relational Model: https://www.geeksforgeeks.org/types-of-keys-in-relational-model/
+### 4. Praktilised SQL näited — enda loodud
