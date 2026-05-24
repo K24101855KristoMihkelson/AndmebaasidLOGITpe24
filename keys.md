@@ -1,6 +1,6 @@
 # Andmebaasi võtmed (Keys)
 
-Selles failis on selgitatud relatsiooniliste andmebaaside peamised võtmetüübid koos logistikasüsteemidel põhinevate SQL-näidetega.
+Failis on ära selgitatud relatsiooniliste andmebaaside peamised võtmetüübid koos logistikasüsteemidel põhinevate SQL-näidetega.
 
 ---
 
