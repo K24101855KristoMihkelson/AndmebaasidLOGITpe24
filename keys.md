@@ -142,7 +142,7 @@ WHERE TABLE_NAME = 'Kliendid';
 
 ## Kasutatud allikad
 
-1.Microsoft Learn — Primary and Foreign Key Constraints: https://learn.microsoft.com/en-us/sql/relational-databases/tables/primary-and-foreign-key-constraints
+1. Microsoft Learn — Primary and Foreign Key Constraints: https://learn.microsoft.com/en-us/sql/relational-databases/tables/primary-and-foreign-key-constraints
 
 2. W3Schools — SQL Keys: https://www.w3schools.com/sql/sql_primarykey.asp
 
