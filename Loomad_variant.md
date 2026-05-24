@@ -1,0 +1,99 @@
+-- ==========================================
+-- 1.-3., 5. TABELITE LOOMINE JA PIIRANGUD
+-- ==========================================
+CREATE TABLE Boks (
+    boks_id INT PRIMARY KEY,
+    nimetus VARCHAR(50) NOT NULL UNIQUE, 
+    asukoht VARCHAR(50) NOT NULL,
+    mahutavus INT CHECK (mahutavus > 0) 
+);
+
+CREATE TABLE Vabatahtlik (
+    vabatahtlik_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    kontakt VARCHAR(100) NOT NULL UNIQUE 
+);
+
+CREATE TABLE Loom (
+    loom_id INT PRIMARY KEY,
+    nimi VARCHAR(50) NOT NULL,
+    liik VARCHAR(50) NOT NULL,
+    tõug VARCHAR(50),
+    sugu CHAR(1) CHECK (sugu IN ('E', 'I')), 
+    saabumise_kuupäev DATE DEFAULT GETDATE(), 
+    boks_id INT,
+    FOREIGN KEY (boks_id) REFERENCES Boks(boks_id)
+);
+
+CREATE TABLE Koristus (
+    koristus_id INT PRIMARY KEY,
+    loom_id INT NOT NULL,
+    vabatahtlik_id INT NOT NULL,
+    kuupäev DATE NOT NULL DEFAULT GETDATE(),
+    kestus INT CHECK (kestus >= 10), 
+    FOREIGN KEY (loom_id) REFERENCES Loom(loom_id),
+    FOREIGN KEY (vabatahtlik_id) REFERENCES Vabatahtlik(vabatahtlik_id)
+);
+
+CREATE TABLE Toetaja (
+    toetaja_id INT PRIMARY KEY,
+    nimi VARCHAR(100) NOT NULL,
+    toetussumma DECIMAL(10,2) CHECK (toetussumma > 0),
+    loom_id INT,
+    FOREIGN KEY (loom_id) REFERENCES Loom(loom_id)
+);
+
+
+-- ==========================================
+-- 4. ANDMETE SISESTAMINE (INSERT)
+-- ==========================================
+INSERT INTO Boks VALUES (1, 'Koerte suur', 'Peamaja', 10), (2, 'Koerte väike', 'Peamaja', 5), (3, 'Kassituba 1', 'Kassikohvik', 15), (4, 'Kassituba 2', 'Kassikohvik', 10), (5, 'Karantiin', 'Eraldi hoone', 3);
+INSERT INTO Vabatahtlik VALUES (1, 'Mari Maasikas', 'mari@email.ee'), (2, 'Jaan Tamm', 'jaan@email.ee'), (3, 'Kati Karu', 'kati@email.ee'), (4, 'Mati Kask', 'mati@email.ee'), (5, 'Pille Paju', 'pille@email.ee');
+INSERT INTO Loom VALUES (1, 'Muri', 'Koer', 'Krants', 'I', '2023-01-15', 1), (2, 'Miisu', 'Kass', 'Pärsia', 'E', '2023-02-10', 3), (3, 'Rex', 'Koer', 'Saksa lambakoer', 'I', '2023-03-05', 1), (4, 'Nurri', 'Kass', 'Tänavakass', 'E', '2023-04-20', 4), (5, 'Pontu', 'Koer', 'Taks', 'I', '2023-05-12', 2);
+INSERT INTO Koristus VALUES (1, 1, 1, '2023-10-01', 30), (2, 2, 2, '2023-10-02', 45), (3, 3, 3, '2023-10-03', 60), (4, 4, 4, '2023-10-04', 30), (5, 5, 5, '2023-10-05', 40);
+INSERT INTO Toetaja VALUES (1, 'AS Firma', 500.00, 1), (2, 'OÜ Loomasõber', 250.00, 2), (3, 'Priit P.', 50.00, 3), (4, 'Kalle K.', 100.00, 4), (5, 'Anonüümne', 20.00, 5);
+
+
+-- ==========================================
+-- 6. PROTSEDUURID (3 igale tabelile = 15 tk)
+-- ==========================================
+-- BOKS
+CREATE PROCEDURE LisaBoks @id INT, @nimetus VARCHAR(50), @asukoht VARCHAR(50), @mahutavus INT AS BEGIN INSERT INTO Boks VALUES (@id, @nimetus, @asukoht, @mahutavus); END;
+CREATE PROCEDURE MuudaBoksi @boks_id INT, @mahutavus INT AS BEGIN UPDATE Boks SET mahutavus = @mahutavus WHERE boks_id = @boks_id; END;
+CREATE PROCEDURE OtsiBoksi @asukoht VARCHAR(50) AS BEGIN SELECT * FROM Boks WHERE asukoht = @asukoht; END;
+
+-- VABATAHTLIK
+CREATE PROCEDURE LisaVabatahtlik @id INT, @nimi VARCHAR(100), @kontakt VARCHAR(100) AS BEGIN INSERT INTO Vabatahtlik VALUES (@id, @nimi, @kontakt); END;
+CREATE PROCEDURE MuudaVabatahtlikku @id INT, @kontakt VARCHAR(100) AS BEGIN UPDATE Vabatahtlik SET kontakt = @kontakt WHERE vabatahtlik_id = @id; END;
+CREATE PROCEDURE OtsiVabatahtlikku @nimi VARCHAR(100) AS BEGIN SELECT * FROM Vabatahtlik WHERE nimi LIKE @nimi + '%'; END;
+
+-- LOOM
+CREATE PROCEDURE LisaLoom @id INT, @nimi VARCHAR(50), @liik VARCHAR(50), @toug VARCHAR(50), @sugu CHAR(1), @boks INT AS BEGIN INSERT INTO Loom VALUES (@id, @nimi, @liik, @toug, @sugu, GETDATE(), @boks); END;
+CREATE PROCEDURE MuudaLoomaboksi @loom_id INT, @uus_boks INT AS BEGIN UPDATE Loom SET boks_id = @uus_boks WHERE loom_id = @loom_id; END;
+CREATE PROCEDURE OtsiLoomi @boks_id INT AS BEGIN SELECT * FROM Loom WHERE boks_id = @boks_id; END;
+
+-- KORISTUS
+ CREATE PROCEDURE LisaKoristus @id INT, @loom INT, @vabatahtlik INT, @kestus INT AS BEGIN INSERT INTO Koristus VALUES (@id, @loom, @vabatahtlik, GETDATE(), @kestus); END;
+ CREATE PROCEDURE MuudaKoristust @id INT, @kestus INT AS BEGIN UPDATE Koristus SET kestus = @kestus WHERE koristus_id = @id; END;
+ CREATE PROCEDURE OtsiKoristusi @vabatahtlik_id INT AS BEGIN SELECT * FROM Koristus WHERE vabatahtlik_id = @vabatahtlik_id; END;
+
+-- TOETAJA
+CREATE PROCEDURE LisaToetaja @id INT, @nimi VARCHAR(100), @summa DECIMAL(10,2), @loom INT AS BEGIN INSERT INTO Toetaja VALUES (@id, @nimi, @summa, @loom); END;
+CREATE PROCEDURE MuudaToetajat @id INT, @summa DECIMAL(10,2) AS BEGIN UPDATE Toetaja SET toetussumma = @summa WHERE toetaja_id = @id; END;
+CREATE PROCEDURE OtsiToetajaid @loom_id INT AS BEGIN SELECT * FROM Toetaja WHERE loom_id = @loom_id; END;
+
+
+
+SELECT * FROM Boks; 
+SELECT * FROM Vabatahtlik; 
+SELECT * FROM Loom; 
+SELECT * FROM Koristus; 
+SELECT * FROM Toetaja;
+
+
+Test 1: Pärimine (Looma otsimine boksi id järgi)
+EXEC OtsiLoomi @boks_id = 1;
+Test 2: Uue andme lisamine (Uus toetaja)
+EXEC LisaToetaja @id = 6, @nimi = 'IT-Firma OÜ', @summa = 1500.00, @loom = 1;
+Test 3: Andmete muutmine (Boksi mahutavuse muutmine)
+EXEC MuudaBoksi @boks_id = 1, @mahutavus = 25;
