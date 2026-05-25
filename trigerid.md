@@ -141,3 +141,36 @@ deny select on logi to sekretarKristo;
 ```
 
 <img width="616" height="322" alt="{3A8375BD-FD67-45A9-A78E-E4A70CE6EF47}" src="https://github.com/user-attachments/assets/29bb1fd9-2fda-424b-b95f-1747bd755199" />
+
+### Trigerid
+
+<img width="711" height="659" alt="{D4A0B4A7-679B-420F-B5FF-ED4AEE4E58EE}" src="https://github.com/user-attachments/assets/da4b6588-af22-4791-b63a-be238e777f16" />
+
+### logid kontroll ning trigerite kontroll
+
+<img width="697" height="350" alt="{90ED6F7A-4914-406C-B47B-C5E418986CDA}" src="https://github.com/user-attachments/assets/2f7a083b-9e91-4c66-a3b7-fbe01a8067c6" />
+
+<img width="972" height="411" alt="{BD2F39FC-3582-4F5F-A728-BFA141033449}" src="https://github.com/user-attachments/assets/51e4412e-acc4-4a6f-b8e2-58db2ef93ab6" />
+
+### Linna kustutamise triger
+
+<img width="683" height="735" alt="{4F99CB19-1EEC-4FB0-B9C4-B1CBEF3C8136}" src="https://github.com/user-attachments/assets/30f5b165-2805-4177-beb0-7697cd02dda0" />
+
+### Kontroll
+
+<img width="1060" height="399" alt="{B6B60960-6D2F-4E96-83B3-49C3384918A7}" src="https://github.com/user-attachments/assets/5d2ac7c9-789f-4e45-832d-050f203ee2d9" />
+
+
+### Update trigger
+
+<img width="712" height="746" alt="{4219E97C-9AF3-47C0-A0A9-471BA3C18E76}" src="https://github.com/user-attachments/assets/0127f819-b821-4d39-992f-c46f8f9c5180" />
+
+### tulemus
+<img width="809" height="309" alt="{43664553-5AE6-42B6-A7B9-8D70DFF09A34}" src="https://github.com/user-attachments/assets/a805fdcd-735c-44d0-8e9b-f5782d1e6baa" />
+
+<img width="1013" height="363" alt="{9E1B14D5-4256-455B-AEF8-C36C1E6C7D72}" src="https://github.com/user-attachments/assets/f15414f4-4fff-45bd-8180-b9f439443e98" />
+
+
+<img width="1013" height="363" alt="{9E1B14D5-4256-455B-AEF8-C36C1E6C7D72}" src="https://github.com/user-attachments/assets/e1df9217-d7b6-49bb-875c-3f38f511d4d1" />
+
+
