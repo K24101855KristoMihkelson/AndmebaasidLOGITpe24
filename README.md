@@ -1,4 +1,4 @@
-# Andmebaasid Kristo portfoolio LOGITpe24
+# Andmebaasid õpilane Kristo portfoolio LOGITpe24
 Andmebaasidega seotud sql kood ja konspektid
 
 [Select laused](select.md)  [Kasutaja loomine SQL Server](Kasutaja.md) [Triggerid](trigerid.md) [Kodutöö - Keys](keys.md) [Küsimused](kysimused.md)
