@@ -1,7 +1,10 @@
 # Andmebaasid õpilane Kristo portfoolio LOGITpe24
-Andmebaasidega seotud sql kood ja konspektid
 
 [Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+Andmebaasidega seotud sql kood ja konspektid
+
+
 - SQL - structured Query Language - struktureeritud päringukeel
 - DDL - Data definition Language -andmebaasistruktuuri loomiseks - CREATE, ALTER
 - DML -  Data Manipulation Language -andmete lisamine ja uuendamine tabelis - INSERT, UPDATE, DELETE
