@@ -1,7 +1,12 @@
-<img width="944" height="545" alt="{F1FADFEE-E01D-4C9E-B2C2-A185CC75702D}" src="https://github.com/user-attachments/assets/233960f6-d53c-40d8-a9fe-c7157e12ecb0" />
+# Auto andmete tegemine
 
 
 [Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+
+
+<img width="944" height="545" alt="{F1FADFEE-E01D-4C9E-B2C2-A185CC75702D}" src="https://github.com/user-attachments/assets/233960f6-d53c-40d8-a9fe-c7157e12ecb0" />
+
 
 
 
