@@ -1,5 +1,8 @@
-# Küsimustele vastamine
+
 [Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+
+# Küsimustele vastamine
 
 
 ## Koosta päring tabeli loomiseks
