@@ -1,5 +1,9 @@
 ﻿--tee lahti fail index.sql
 
+ [Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+
+
 Create database indexLoomine;
 
 use indexLoomine;
