@@ -1,7 +1,8 @@
-# Andmebaasi vaated (Views)
 
 [Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
 
+
+# Andmebaasi vaated (Views)
 
 
 ### Vaade (ingl. view) on virtuaalne tabel, mis ei salvesta andmeid füüsiliselt, vaid on salvestatud SELECT-päring. 
