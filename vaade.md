@@ -27,3 +27,6 @@ JOIN Tellimused ON Kliendid.id = Tellimused.kliendi_id;
 ```
 SELECT * FROM KliendiOstud WHERE summa > 50;
 ```
+<img width="580" height="371" alt="{FA0FF14F-A91A-481E-B925-969005B94623}" src="https://github.com/user-attachments/assets/0df96795-ef5b-4f75-b09b-1053a96e1ad0" />
+
+<img width="563" height="306" alt="{B3B6E8DB-F467-48AB-8693-64DFE90C67F4}" src="https://github.com/user-attachments/assets/74e13c6d-5cd2-4d54-be01-2e3852f711dd" />
