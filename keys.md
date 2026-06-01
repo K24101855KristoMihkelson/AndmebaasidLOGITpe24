@@ -1,5 +1,10 @@
 # Andmebaasi võtmed (Keys)
 
+[Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+
+
+
 Failis on ära selgitatud relatsiooniliste andmebaaside peamised võtmetüübid koos logistikasüsteemidel põhinevate SQL-näidetega.
 
 ---
