@@ -2,7 +2,6 @@
 Andmebaasidega seotud sql kood ja konspektid
 
 [Select laused](select.md)  [Kasutaja loomine SQL Server](Kasutaja.md) [Triggerid](trigerid.md) [Kodutöö - Keys](keys.md) [Küsimused](kysimused.md)
-
 - SQL - structured Query Language - struktureeritud päringukeel
 - DDL - Data definition Language -andmebaasistruktuuri loomiseks - CREATE, ALTER
 - DML -  Data Manipulation Language -andmete lisamine ja uuendamine tabelis - INSERT, UPDATE, DELETE
