@@ -1,3 +1,7 @@
+
+[Select laused](select.md) | [Kasutaja loomine SQL Server](Kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md) | [Küsimused](kysimused.md) |  [Protseduuride tegemine](charindex_proceduur.md) | [vaate tegemine](vaade.md)
+
+
 ## Koosta päring tabeli loomiseks
 <img width="839" height="506" alt="{9EB8FB0E-090C-4738-9D08-1C3C402B57C4}" src="https://github.com/user-attachments/assets/54de5d3e-d4e0-4013-ba8e-3ab57b576f5d" />
 ## Piirangute määramise koht
