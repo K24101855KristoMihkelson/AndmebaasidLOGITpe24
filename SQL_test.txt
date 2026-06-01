@@ -1,0 +1,199 @@
+--Koostan uue andmebaasi
+create database KristoHinne3;
+use KristoHinne3;
+
+--Koostan tabelid
+
+--Koostan tabeli lennujaam, millel on lennujaamade andmed
+
+create table LennuJaam (
+LennuJaamID int primary key identity(1,1),
+LennuJaamaNimi varchar(50),
+Linn varchar(50),
+);
+
+--Koostan tabeli Lend, mis kuvab lennunumbri, väljumisaja ning ka lennujaamaID
+
+CREATE TABLE Lend (
+    LendID INT PRIMARY KEY IDENTITY(1,1),
+    LennuNumber VARCHAR(20),
+    Valjumisaeg DATETIME,
+    LennujaamID INT,
+    FOREIGN KEY (LennujaamID) REFERENCES Lennujaam(LennujaamID)
+);
+
+--Tabel, mis näitab reisijaid, nime, piletinumbrit.
+CREATE TABLE Reisija (
+    ReisijaID INT PRIMARY KEY IDENTITY(1,1),
+    Nimi VARCHAR(50),
+    Piletinumber VARCHAR(20),
+    LendID INT,
+    FOREIGN KEY (LendID) REFERENCES Lend(LendID)
+);
+
+-- Kasutaja loomine ilma paroolita, et oleks kergem testida
+CREATE USER reisijaKristo WITHOUT LOGIN;
+
+-- Annan tabeli koostamise õiguse reisijaKristole
+GRANT CREATE TABLE TO reisijaKristo;
+
+-- Annan andmete vaatamise (SELECT) õiguse kõikidesse tabelitesse
+GRANT SELECT ON Lennujaam TO reisijaKristo;
+GRANT SELECT ON Lend TO reisijaKristo;
+GRANT SELECT ON Reisija TO reisijaKristo;
+
+-- Annan andmete lisamise (INSERT) ja kustutamise (DELETE) õiguse vastavalt ülesandele
+GRANT INSERT, DELETE ON Reisija TO reisijaKristo;
+GRANT INSERT, DELETE ON Lend TO reisijaKristo;
+
+--Loon logitabeli, mis hakkab automaatselt salvestama muudatusi
+
+CREATE TABLE logi (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    kasutaja VARCHAR(50),
+    kuupaev DATETIME,
+    sisestusAndmed VARCHAR(255)
+);
+
+-- Triger lennu lisamise jälgimiseks
+ALTER TRIGGER lennu_lisamine
+ON Lend
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO logi (kasutaja, kuupaev, sisestusAndmed)
+    SELECT CURRENT_USER, GETDATE(), LennuNumber 
+    FROM inserted;
+END;
+
+-- Triger lennu kustutamise jälgimiseks
+ALTER TRIGGER lennu_kustutamine
+ON Lend
+AFTER DELETE
+AS
+BEGIN
+    INSERT INTO logi (kasutaja, kuupaev, sisestusAndmed)
+    SELECT CURRENT_USER, GETDATE(), LennuNumber 
+    FROM deleted;
+END;
+
+--Testimiseks lisan ühe lennujaama, et pärast lende testida
+INSERT INTO Lennujaam (LennujaamaNimi, Linn) 
+VALUES ('Tallinna Lennujaam', 'Tallinn');
+
+-- Rolli vahetamine, ehk kui ennem olin admin siis olen nüüd reisijaKristo
+EXECUTE AS USER = 'reisijaKristo';
+
+-- Vaatamisõiguse kontrollimine, kas Lennujaam kuvab väärtust või mitte.
+SELECT * FROM Lennujaam;
+
+-- Triggerite testimine, ehk lisame kohe lennu ja kustutame ka selle kohe ära.
+INSERT INTO Lend (LennuNumber, Valjumisaeg, LennujaamID) 
+VALUES ('BT123', '2026-06-10 12:00:00', 1);
+
+DELETE FROM Lend WHERE LennuNumber = 'BT123';
+
+--Tabeli struktuuri muutmine, see annab errorit, sest et kasutajal pole õigust tabeleid muuta
+ALTER TABLE Reisija ADD test_veerg VARCHAR(10); 
+
+
+-- Taastan admini õigused tagasi
+REVERT;
+
+
+-- Lõpuks vaatan logitabelisse ning vaatan mis tulemuseks ilmus.
+SELECT * FROM logi;
+
+
+--Protseduur, mis lisab uue lennujaama
+
+CREATE PROCEDURE LisaLennujaam
+    @nimi VARCHAR(50),
+    @linn VARCHAR(50)
+AS
+    INSERT INTO Lennujaam (LennujaamaNimi, Linn) VALUES (@nimi, @linn);
+
+--Protseduur, mis otsib lendu linna järgi
+
+CREATE PROCEDURE OtsiLendu
+    @otsitavLinn VARCHAR(50)
+AS
+    SELECT Lend.LennuNumber, Lend.Valjumisaeg
+    FROM Lend
+    JOIN Lennujaam ON Lend.LennujaamID = Lennujaam.LennujaamID
+    WHERE Lennujaam.Linn = @otsitavLinn;
+
+--Protseduur, mis kustutab reisija ID järgi
+
+CREATE PROCEDURE KustutaReisija
+    @reisijaID INT
+AS
+    DELETE FROM Reisija WHERE ReisijaID = @reisijaID;
+
+
+--esimene vaade näitab ainult Tallinna lende (ühendab tabelid Lend ja Lennujaam)
+
+CREATE VIEW vw_TallinnaLennud AS
+SELECT Lend.LennuNumber, Lennujaam.LennujaamaNimi, Lennujaam.Linn
+FROM Lend
+JOIN Lennujaam ON Lend.LennujaamID = Lennujaam.LennujaamID
+WHERE Lennujaam.Linn = 'Tallinn';
+
+--Teine vaade näitab reisija Peeter Puu info (ühendab tabelid Reisija ja Lend)
+
+CREATE VIEW vw_PeetriPilet AS
+SELECT Reisija.Nimi, Reisija.Piletinumber, Lend.LennuNumber
+FROM Reisija
+JOIN Lend ON Reisija.LendID = Lend.LendID
+WHERE Reisija.Nimi = 'Peeter Puu';
+
+--Kolmas vaade näitab ainult neid reise, mis toimuvad tulevikus.
+
+CREATE VIEW vw_TulevasedReisid AS
+SELECT Reisija.Nimi, Lend.LennuNumber, Lend.Valjumisaeg
+FROM Reisija
+JOIN Lend ON Reisija.LendID = Lend.LendID
+WHERE Lend.Valjumisaeg > GETDATE();
+
+--Enda ülesande koostamine: Koostasin tabeli ning lisasin näiteid
+
+--Uue tabeli koostamine
+
+CREATE TABLE Lennufirma (
+    LennufirmaID INT PRIMARY KEY IDENTITY(1,1),
+    FirmaNimi VARCHAR(50),
+    Luhikood VARCHAR(10) 
+);
+
+--Lisan paar lennufirmat,et näidata tabeli töökindlust
+INSERT INTO Lennufirma (FirmaNimi, Luhikood) VALUES ('AirBaltic', 'BT');
+INSERT INTO Lennufirma (FirmaNimi, Luhikood) VALUES ('Nordica', 'ND');
+
+--Kontroll, kas tabel ja andmed on olemas
+
+SELECT * FROM Lennufirma;
+
+--Lõpptest, kõikide asjade kontroll
+
+--Protseduuri testimine: Lisan Tartu lennujaama
+
+EXEC LisaLennujaam @nimi = 'Tartu Lennujaam', @linn = 'Tartu';
+
+--Lisan uue lennu Tallinnast
+
+INSERT INTO Lend (LennuNumber, Valjumisaeg, LennujaamID) 
+VALUES ('TK999', '2026-06-15 14:00:00', 1);
+
+-- Lisan lennule reisija.Kasutan otse lennu ID-d (number 2).
+INSERT INTO Reisija (Nimi, Piletinumber, LendID) 
+VALUES ('Peeter Puu', 'Pilet-999', 3);
+
+
+--Katsetame kustutamise protseduuri.
+-- Kustutan Peetri, kelle ID on 1.
+EXEC KustutaReisija @reisijaID = 3;
+
+select * from logi;
+
+
+
