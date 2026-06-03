@@ -30,13 +30,13 @@ VALUES (1, 'Tallinna Lennujaam', 'Tallinn'), (2, 'Helsinki Vantaa', 'Helsinki'),
 INSERT INTO Lend (LendID, LennuNumber, Väljumisaeg, FK_LennujaamID)
 VALUES (15, 'A-101', '2026-08-24 10:00:00', 1), (20, 'BT-452', '2026-09-12 15:30:00', 3), (30, 'AY-721', '2026-10-05 08:15:00', 2);
 INSERT INTO Reisija (ReisijaID, Nimi, Piletinumber, FK_LendID)
-VALUES (100, 'Kristofer Tamm', 'TLL-112233', 10), (200, 'Mari Maasikas', 'RIX-445566', 20), (300, 'Jüri Juurikas', 'HEL-778899', 30);
+VALUES (100, 'Kristo Tamm', 'TLL-112233', 10), (200, 'Mari Maasikas', 'RIX-445566', 20), (300, 'Jüri Juurikas', 'HEL-778899', 30);
 --1,4,5
-GRANT CREATE TABLE TO reisijaKristofer;
-GRANT SELECT TO reisijaKristofer;
-GRANT INSERT, DELETE ON Reisija TO reisijaKristofer;
-GRANT INSERT, DELETE ON Lend TO reisijaKristofer;
-DENY SELECT ON logi TO reisijaKristofer;
+GRANT CREATE TABLE TO reisijaKristo;
+GRANT SELECT TO reisijaKristo;
+GRANT INSERT, DELETE ON Reisija TO reisijaKristo;
+GRANT INSERT, DELETE ON Lend TO reisijaKristo;
+DENY SELECT ON logi TO reisijaKristo;
 --6
 CREATE TABLE logi (
     id INT PRIMARY KEY IDENTITY(1,1),
