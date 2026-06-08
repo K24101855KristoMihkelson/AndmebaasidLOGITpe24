@@ -203,4 +203,4 @@ DELETE FROM Lend
 WHERE LendID = 40;
 ```
 
-<img width="830" height="158" alt="{C3A11BE9-7E23-4B2C-B0DC-3EC5C29AB764}" src="https://github.com/user-attachments/assets/c86cd564-8bc7-4f96-8f26-37ef160b2d00" />
+<img width="581" height="512" alt="{EB898AED-A46C-4DD7-87DE-A658AB53A7CF}" src="https://github.com/user-attachments/assets/930ff059-8ccc-44bb-8725-55e06ae42e0a" />
